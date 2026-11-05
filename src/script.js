@@ -5,6 +5,9 @@ import { createEnvironment } from './environment.js';
 import { createArtifact } from './artifact.js';
 import { addLighting } from './lighting.js';
 import { createControls } from './controls.js';
+import { createAnimationSystem } from './animation.js';
+import { createInteractionSystem } from './interaction.js';
+import { createPhysicsSystem } from './physics.js';
 
 const canvas = document.querySelector('canvas.webgl');
 const { scene, camera, renderer } = createScene();
@@ -12,8 +15,6 @@ const environment = createEnvironment();
 const artifact = createArtifact();
 
 scene.add(environment, artifact);
-addLighting(scene);
-const controls = createControls(camera, canvas);
 const timer = new Timer();
 
 function handleResize() {
@@ -25,16 +26,26 @@ function handleResize() {
 
 window.addEventListener('resize', handleResize);
 
-function tick() {
-    timer.update();
-    const elapsedTime = timer.getElapsed();
-    artifact.rotation.y = elapsedTime * 0.18;
-    artifact.position.y = 4.2 + Math.sin(elapsedTime * 1.4) * 0.08;
-    artifact.children[0].rotation.y = elapsedTime * 0.35;
-    artifact.children[1].rotation.y = -elapsedTime * 0.8;
-    controls.update();
-    renderer.render(scene, camera);
-    window.requestAnimationFrame(tick);
+async function start() {
+    const lights = addLighting(scene);
+    const controls = createControls(camera, canvas);
+    const physics = await createPhysicsSystem({ environment });
+    const animation = createAnimationSystem({ artifact, environment, lights });
+    createInteractionSystem({ camera, canvas, scene, environment, physics });
+
+    function tick() {
+        timer.update();
+        const deltaTime = timer.getDelta();
+        const elapsedTime = timer.getElapsed();
+        animation.update(deltaTime, elapsedTime);
+        physics.update(deltaTime);
+        controls.update();
+        renderer.render(scene, camera);
+        window.requestAnimationFrame(tick);
+    }
+
+    window.addEventListener('beforeunload', () => physics.dispose(), { once: true });
+    tick();
 }
 
-tick();
+start();

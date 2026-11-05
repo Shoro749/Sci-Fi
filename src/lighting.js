@@ -28,4 +28,6 @@ export function addLighting(scene) {
   const cyanLight = new THREE.PointLight(0x00bcd4, 7, 12, 2);
   cyanLight.position.set(7, 4, 5);
   scene.add(cyanLight);
+
+  return { artifactLight, magentaLight, cyanLight };
 }

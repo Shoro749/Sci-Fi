@@ -24,8 +24,19 @@ h1 { margin: 7px 0 0; color: #f0fbff; font-family: 'Syne', sans-serif; font-size
 .hint { color: rgba(199, 237, 244, 0.72); font-size: 10px; letter-spacing: 0.13em; }
 .hint span { color: #d85fff; padding: 0 7px; }
 
+.artifact-panel { align-self: flex-start; margin-top: 18vh; display: grid; gap: 7px; width: min(250px, 42vw); padding: 14px 16px; border-top: 1px solid rgba(81, 220, 232, 0.58); border-bottom: 1px solid rgba(81, 220, 232, 0.18); background: linear-gradient(90deg, rgba(3, 14, 23, 0.55), transparent); color: #d8f5ff; }
+.panel-label, .panel-data { color: rgba(157, 239, 242, 0.62); font-size: 9px; letter-spacing: 0.1em; }
+.artifact-panel strong { color: #f0fbff; font-family: 'Syne', sans-serif; font-size: 14px; letter-spacing: 0.08em; }
+.decorative-indicators { position: absolute; right: 38px; bottom: 31px; display: flex; gap: 6px; }
+.decorative-indicators i { width: 22px; height: 3px; background: #236879; box-shadow: 0 0 8px rgba(58, 232, 241, 0.45); }
+.decorative-indicators i:first-child { background: #4df4c8; }
+.interaction-tooltip { position: fixed; z-index: 3; pointer-events: none; padding: 8px 10px; border: 1px solid rgba(81, 220, 232, 0.5); background: rgba(3, 14, 23, 0.9); color: #b6f7fa; font-size: 9px; letter-spacing: 0.08em; opacity: 0; transition: opacity 120ms ease; }
+.interaction-tooltip.is-visible { opacity: 1; }
+
 @media (max-width: 640px) {
   .interface { padding: 22px 18px; }
   .status-panel { font-size: 9px; }
   .hint { font-size: 8px; }
+  .artifact-panel { margin-top: 12vh; width: min(220px, 68vw); }
+  .decorative-indicators { right: 18px; bottom: 23px; }
 }

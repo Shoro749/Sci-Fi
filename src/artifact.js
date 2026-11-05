@@ -44,5 +44,7 @@ export function createArtifact() {
   const halo = new THREE.Mesh(new THREE.SphereGeometry(1.35, 24, 16), new THREE.MeshBasicMaterial({ color: 0x27eaff, transparent: true, opacity: 0.075, side: THREE.DoubleSide }));
   artifact.add(halo);
 
+  artifact.userData.animationParts = { core, innerCore, rings: artifact.children.slice(2, 5), halo, glowMaterial: glow, glassMaterial: glass };
+
   return artifact;
 }
