@@ -13,7 +13,8 @@ html, body { margin: 0; min-height: 100%; overflow: hidden; background: #04070d;
 
 .webgl { position: fixed; inset: 0; display: block; outline: none; }
 
-.interface { position: fixed; inset: 0; pointer-events: none; padding: 30px 38px; display: flex; flex-direction: column; justify-content: space-between; }
+.interface { position: fixed; inset: 0; pointer-events: none; padding: 30px 38px; display: flex; flex-direction: column; justify-content: space-between; transition: opacity 180ms ease; }
+.interface.is-hidden { opacity: 0; }
 
 .brand-mark { width: fit-content; border-left: 2px solid #21d8e8; padding-left: 14px; text-shadow: 0 0 20px rgba(49, 226, 239, 0.22); }
 .brand-kicker { color: #53dfe7; font-size: 10px; letter-spacing: 0.2em; }
@@ -32,6 +33,8 @@ h1 { margin: 7px 0 0; color: #f0fbff; font-family: 'Syne', sans-serif; font-size
 .decorative-indicators i:first-child { background: #4df4c8; }
 .interaction-tooltip { position: fixed; z-index: 3; pointer-events: none; padding: 8px 10px; border: 1px solid rgba(81, 220, 232, 0.5); background: rgba(3, 14, 23, 0.9); color: #b6f7fa; font-size: 9px; letter-spacing: 0.08em; opacity: 0; transition: opacity 120ms ease; }
 .interaction-tooltip.is-visible { opacity: 1; }
+.ui-toggle { position: absolute; right: 38px; top: 30px; pointer-events: auto; border: 1px solid rgba(81, 220, 232, 0.42); background: rgba(3, 14, 23, 0.72); color: #b6f7fa; padding: 8px 10px; font: 10px 'Space Mono', monospace; letter-spacing: 0.08em; cursor: pointer; }
+.ui-toggle:hover { border-color: #53dfe7; color: #ffffff; }
 
 @media (max-width: 640px) {
   .interface { padding: 22px 18px; }
@@ -39,4 +42,5 @@ h1 { margin: 7px 0 0; color: #f0fbff; font-family: 'Syne', sans-serif; font-size
   .hint { font-size: 8px; }
   .artifact-panel { margin-top: 12vh; width: min(220px, 68vw); }
   .decorative-indicators { right: 18px; bottom: 23px; }
+  .ui-toggle { right: 18px; top: 22px; }
 }
