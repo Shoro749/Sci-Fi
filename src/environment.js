@@ -118,10 +118,10 @@ export function createEnvironment() {
   environment.userData.rotatingElements.push(platform);
   environment.add(platform);
 
-  addContainer(environment, [-8, 0, -5.8], [2.6, 2.1, 2.3]);
-  addContainer(environment, [8, 0, -5.8], [2, 3.4, 2]);
-  addContainer(environment, [-8.8, 0, 5.4], [3, 1.6, 2.1], materials.cyan);
-  addContainer(environment, [8.8, 0, 5.6], [1.8, 1.4, 2.8], materials.purple);
+  addContainer(environment, [-5.8, 0, -5.2], [2.6, 2.1, 2.3]);
+  addContainer(environment, [-2.4, 0, -4.7], [2, 3.4, 2]);
+  addContainer(environment, [5.4, 0, 4.8], [3, 1.6, 2.1], materials.cyan);
+  addContainer(environment, [8.2, 0, 5.2], [1.8, 1.4, 2.8], materials.purple);
 
   addServerRack(environment, -9.5, -1.7);
   addServerRack(environment, 9.5, -1.7);

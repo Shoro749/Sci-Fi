@@ -21,13 +21,14 @@ scene.add(environment, artifact, dust);
 const timer = new Timer();
 const interfaceElement = document.querySelector('.interface');
 const uiToggle = document.querySelector('[data-ui-toggle]');
+let postProcessing;
 
 function handleResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
-    postProcessing.resize(window.innerWidth, window.innerHeight);
+    if (postProcessing) postProcessing.resize(window.innerWidth, window.innerHeight);
 }
 
 window.addEventListener('resize', handleResize);
@@ -35,7 +36,7 @@ window.addEventListener('resize', handleResize);
 async function start() {
     const lights = addLighting(scene);
     const controls = createControls(camera, canvas);
-    const postProcessing = createPostProcessing(renderer, scene, camera);
+    postProcessing = createPostProcessing(renderer, scene, camera);
     const physics = await createPhysicsSystem({ environment });
     const animation = createAnimationSystem({ artifact, environment, lights });
     createInteractionSystem({ camera, canvas, scene, environment, physics });

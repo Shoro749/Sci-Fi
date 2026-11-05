@@ -41,13 +41,13 @@ export async function createPhysicsSystem({ environment }) {
       RAPIER.RigidBodyDesc.dynamic()
         .setTranslation(object.position.x, halfExtents[1], object.position.z)
         .setAdditionalMass(mass)
-        .setLinearDamping(1.15)
-        .setAngularDamping(1.8)
+        .setLinearDamping(0.38)
+        .setAngularDamping(0.7)
         .setCanSleep(true),
     );
     const collider = RAPIER.ColliderDesc.cuboid(...halfExtents)
       .setFriction(friction)
-      .setRestitution(restitution)
+      .setRestitution(Math.max(restitution, 0.26))
       .setDensity(1);
     world.createCollider(collider, body);
     dynamicBodies.set(object, body);

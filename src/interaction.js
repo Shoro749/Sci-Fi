@@ -55,7 +55,9 @@ export function createInteractionSystem({ camera, canvas, environment, physics }
     if (!object) return;
     const impulseDirection = new THREE.Vector3();
     camera.getWorldDirection(impulseDirection);
-    physics.applyImpulse(object, impulseDirection.multiplyScalar(-2.2).setY(1.15));
+    const impulse = impulseDirection.multiplyScalar(8.5);
+    impulse.y += 3.5;
+    physics.applyImpulse(object, impulse);
   });
 
   return { update: () => {} };
