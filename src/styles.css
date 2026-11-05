@@ -1,0 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@500;700;800&display=swap');
+
+:root {
+  color-scheme: dark;
+  font-family: 'Space Mono', monospace;
+  background: #04070d;
+  color: #d8f5ff;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; min-height: 100%; overflow: hidden; background: #04070d; }
+
+.webgl { position: fixed; inset: 0; display: block; outline: none; }
+
+.interface { position: fixed; inset: 0; pointer-events: none; padding: 30px 38px; display: flex; flex-direction: column; justify-content: space-between; }
+
+.brand-mark { width: fit-content; border-left: 2px solid #21d8e8; padding-left: 14px; text-shadow: 0 0 20px rgba(49, 226, 239, 0.22); }
+.brand-kicker { color: #53dfe7; font-size: 10px; letter-spacing: 0.2em; }
+h1 { margin: 7px 0 0; color: #f0fbff; font-family: 'Syne', sans-serif; font-size: clamp(24px, 3vw, 42px); letter-spacing: 0.03em; text-transform: uppercase; }
+
+.status-panel { align-self: flex-end; display: flex; align-items: center; gap: 10px; padding: 11px 15px; border: 1px solid rgba(81, 220, 232, 0.42); background: rgba(3, 14, 23, 0.62); color: #9deff2; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: #4df4c8; box-shadow: 0 0 12px #4df4c8; }
+.hint { color: rgba(199, 237, 244, 0.72); font-size: 10px; letter-spacing: 0.13em; }
+.hint span { color: #d85fff; padding: 0 7px; }
+
+@media (max-width: 640px) {
+  .interface { padding: 22px 18px; }
+  .status-panel { font-size: 9px; }
+  .hint { font-size: 8px; }
+}
