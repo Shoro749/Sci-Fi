@@ -32,8 +32,11 @@ async function start() {
     const physics = await createPhysicsSystem({ environment });
     const animation = createAnimationSystem({ artifact, environment, lights });
     createInteractionSystem({ camera, canvas, scene, environment, physics });
+    let isRunning = true;
+    let animationFrameId = 0;
 
     function tick() {
+        if (!isRunning) return;
         timer.update();
         const deltaTime = timer.getDelta();
         const elapsedTime = timer.getElapsed();
@@ -41,10 +44,14 @@ async function start() {
         physics.update(deltaTime);
         controls.update();
         renderer.render(scene, camera);
-        window.requestAnimationFrame(tick);
+        animationFrameId = window.requestAnimationFrame(tick);
     }
 
-    window.addEventListener('beforeunload', () => physics.dispose(), { once: true });
+    window.addEventListener('beforeunload', () => {
+        isRunning = false;
+        window.cancelAnimationFrame(animationFrameId);
+        physics.dispose();
+    }, { once: true });
     tick();
 }
 

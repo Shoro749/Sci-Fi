@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { createHolographicField } from './shaders/holographicField.js';
 
 function makeMaterial(options) {
   return new THREE.MeshStandardMaterial({ roughness: 0.3, metalness: 0.7, ...options });
@@ -43,8 +44,10 @@ export function createArtifact() {
 
   const halo = new THREE.Mesh(new THREE.SphereGeometry(1.35, 24, 16), new THREE.MeshBasicMaterial({ color: 0x27eaff, transparent: true, opacity: 0.075, side: THREE.DoubleSide }));
   artifact.add(halo);
+  const holographicField = createHolographicField();
+  artifact.add(holographicField);
 
-  artifact.userData.animationParts = { core, innerCore, rings: artifact.children.slice(2, 5), halo, glowMaterial: glow, glassMaterial: glass };
+  artifact.userData.animationParts = { core, innerCore, rings: artifact.children.slice(2, 5), halo, holographicField, glowMaterial: glow, glassMaterial: glass };
 
   return artifact;
 }

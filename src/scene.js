@@ -3,7 +3,7 @@ import * as THREE from 'three';
 export function createScene() {
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0x04070d);
-  scene.fog = new THREE.FogExp2(0x04070d, 0.018);
+  scene.fog = new THREE.FogExp2(0x04070d, 0.012);
 
   const camera = new THREE.PerspectiveCamera(42, window.innerWidth / window.innerHeight, 0.1, 100);
   camera.position.set(13, 10.5, 15);
@@ -16,7 +16,7 @@ export function createScene() {
   renderer.shadowMap.type = THREE.PCFShadowMap;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.15;
+  renderer.toneMappingExposure = 1.62;
 
   return { scene, camera, renderer };
 }

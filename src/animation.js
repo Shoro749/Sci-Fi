@@ -1,5 +1,5 @@
 export function createAnimationSystem({ artifact, environment, lights }) {
-  const { core, innerCore, rings, halo, glowMaterial, glassMaterial } = artifact.userData.animationParts;
+  const { core, innerCore, rings, halo, holographicField, glowMaterial, glassMaterial } = artifact.userData.animationParts;
 
   function update(deltaTime, elapsedTime) {
     const lift = Math.sin(elapsedTime * 1.4);
@@ -17,6 +17,7 @@ export function createAnimationSystem({ artifact, environment, lights }) {
     glowMaterial.color.setRGB(0.55 * pulse, 1, 1);
     glassMaterial.emissiveIntensity = 1.2 + pulse * 0.45;
     halo.material.opacity = 0.055 + pulse * 0.025;
+    holographicField.userData.shaderMaterial.uniforms.uTime.value = elapsedTime;
     lights.artifactLight.position.y = artifact.position.y;
     lights.artifactLight.intensity = 14 + pulse * 5;
 
