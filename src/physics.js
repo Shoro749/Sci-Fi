@@ -14,7 +14,7 @@ function addFixedBox(world, halfExtents, position, options = {}) {
 
 export async function createPhysicsSystem({ environment }) {
   await RAPIER.init();
-  const world = new RAPIER.World({ x: 0, y: -3.2, z: 0 });
+  const world = new RAPIER.World({ x: 0, y: -0.3, z: 0 });
   world.integrationParameters.dt = FIXED_STEP;
   const dynamicBodies = new Map();
 
@@ -39,7 +39,7 @@ export async function createPhysicsSystem({ environment }) {
     const { halfExtents, mass, friction, restitution } = object.userData.physics;
     const body = world.createRigidBody(
       RAPIER.RigidBodyDesc.dynamic()
-        .setTranslation(object.position.x, halfExtents[1], object.position.z)
+        .setTranslation(object.position.x, object.position.y, object.position.z)
         .setAdditionalMass(mass)
         .setLinearDamping(0.38)
         .setAngularDamping(0.7)

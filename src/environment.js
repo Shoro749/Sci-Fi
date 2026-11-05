@@ -59,9 +59,9 @@ function addContainer(parent, position, scale, accent = materials.amber) {
     friction: 0.78,
     restitution: 0.18,
   };
-  container.add(mesh(new THREE.BoxGeometry(1, 1, 1), materials.dark, [0, scale[1] / 2, 0], scale));
-  container.add(mesh(new THREE.BoxGeometry(1.03, 0.07, 0.08), materials.trim, [0, scale[1] * 0.7, scale[2] / 2 + 0.02], [scale[0], 1, 1]));
-  addGlowStrip(container, [0, scale[1] * 0.42, scale[2] / 2 + 0.035], [scale[0] * 0.55, 0.05, 0.04], accent);
+  container.add(mesh(new THREE.BoxGeometry(1, 1, 1), materials.dark, [0, 0, 0], scale));
+  container.add(mesh(new THREE.BoxGeometry(1.03, 0.07, 0.08), materials.trim, [0, scale[1] * 0.2, scale[2] / 2 + 0.02], [scale[0], 1, 1]));
+  addGlowStrip(container, [0, -scale[1] * 0.08, scale[2] / 2 + 0.035], [scale[0] * 0.55, 0.05, 0.04], accent);
   parent.add(container);
 }
 
@@ -82,6 +82,26 @@ function addPipe(parent, points, radius = 0.08, material = materials.trim) {
   const pipe = new THREE.Mesh(new THREE.TubeGeometry(curve, 32, radius, 8, false), material);
   pipe.castShadow = true;
   parent.add(pipe);
+}
+
+function addPipeConnector(parent, position, direction, accent = materials.cyan) {
+  const connector = new THREE.Group();
+  const axis = new THREE.Vector3(...direction).normalize();
+  connector.position.set(...position);
+  connector.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), axis);
+  connector.add(mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.24, 12), materials.dark, [0, 0, 0]));
+  connector.add(mesh(new THREE.TorusGeometry(0.22, 0.035, 8, 24), materials.trim, [0, 0, 0]));
+  connector.add(mesh(new THREE.TorusGeometry(0.15, 0.018, 8, 24), accent, [0, 0.08, 0]));
+  parent.add(connector);
+}
+
+function addTechnicalModule(parent, position, accent = materials.cyan) {
+  const module = new THREE.Group();
+  module.position.set(...position);
+  module.add(mesh(new THREE.BoxGeometry(0.72, 0.5, 0.34), materials.dark, [0, 0, 0], [1, 1, 1]));
+  module.add(mesh(new THREE.BoxGeometry(0.48, 0.08, 0.035), materials.trim, [0, 0.12, 0.19]));
+  addGlowStrip(module, [0, -0.08, 0.2], [0.28, 0.035, 0.025], accent);
+  parent.add(module);
 }
 
 export function createEnvironment() {
@@ -118,18 +138,26 @@ export function createEnvironment() {
   environment.userData.rotatingElements.push(platform);
   environment.add(platform);
 
-  addContainer(environment, [-5.8, 0, -5.2], [2.6, 2.1, 2.3]);
-  addContainer(environment, [-2.4, 0, -4.7], [2, 3.4, 2]);
-  addContainer(environment, [5.4, 0, 4.8], [3, 1.6, 2.1], materials.cyan);
-  addContainer(environment, [8.2, 0, 5.2], [1.8, 1.4, 2.8], materials.purple);
+  addContainer(environment, [-5.8, 2.7, -5.2], [2.6, 2.1, 2.3]);
+  addContainer(environment, [-2.4, 4.0, -4.7], [2, 3.4, 2]);
+  addContainer(environment, [5.4, 3.2, 4.8], [3, 1.6, 2.1], materials.cyan);
+  addContainer(environment, [8.2, 4.6, 5.2], [1.8, 1.4, 2.8], materials.purple);
 
   addServerRack(environment, -9.5, -1.7);
   addServerRack(environment, 9.5, -1.7);
   addServerRack(environment, 7.5, -7.5);
 
-  addPipe(environment, [[-10.8, 6.8, -8.7], [-8, 6.8, -8.7], [-6, 5.5, -8.7], [-6, 2.5, -8.7]], 0.12, materials.trim);
-  addPipe(environment, [[10.8, 6.2, 8.7], [8, 6.2, 8.7], [6.8, 5.2, 7.2], [6.8, 2.2, 7.2]], 0.1, materials.cyan);
-  addPipe(environment, [[-11, 1.2, 8.7], [-9, 1.2, 8.7], [-7.4, 2.1, 7], [-6, 2.1, 7]], 0.08, materials.purple);
+  addPipe(environment, [[-11.65, 6.8, -8.7], [-8, 6.8, -8.7], [-6, 5.5, -8.7], [-5.45, 2.5, -8.7]], 0.12, materials.trim);
+  addPipeConnector(environment, [-11.7, 6.8, -8.7], [1, 0, 0], materials.purple);
+  addTechnicalModule(environment, [-5.05, 2.5, -8.7], materials.cyan);
+
+  addPipe(environment, [[11.65, 6.2, 8.7], [8, 6.2, 8.7], [6.8, 5.2, 7.2], [6.8, 2.65, 7.2]], 0.1, materials.cyan);
+  addPipeConnector(environment, [11.7, 6.2, 8.7], [-1, 0, 0], materials.cyan);
+  addTechnicalModule(environment, [6.8, 2.35, 7.2], materials.cyan);
+
+  addPipe(environment, [[-11.65, 1.2, 8.7], [-9, 1.2, 8.7], [-7.4, 2.1, 7], [-5.95, 2.1, 7]], 0.08, materials.purple);
+  addPipeConnector(environment, [-11.7, 1.2, 8.7], [1, 0, 0], materials.purple);
+  addTechnicalModule(environment, [-5.55, 2.1, 7], materials.purple);
 
   environment.traverse((object) => {
     if (object.isMesh && object.material.type === 'MeshBasicMaterial' && object.position.y > 0.5) {
